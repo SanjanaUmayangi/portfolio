@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import emailjs from '@emailjs/browser';
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,11 +19,37 @@ export function Contact() {
     message: "",
   })
  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   // Handle form submission here
+  //   console.log("Form submitted:", formData)
+  // }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  try {
+    await emailjs.send(
+      'service_pgkd4ap',     
+      'template_wtt55kh', 
+      //e.currentTarget, //sends the entire form data   
+      {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message
+      },
+      'ulww1I9Ge9hu9Dv9G'
+    );
+    
+    alert("✅ Message sent successfully!");
+    setFormData({ name: "", email: "", phone: "", message: "" });
+    
+  } catch (error) {
+    alert("❌ Failed to send. Please email me directly.");
   }
+};
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -80,7 +106,10 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Phone</p>
-                    <p className="text-white font-medium">(+94) 77 8587 770</p>
+                    {/* <p className="text-white font-medium">(+94) 77 8587 770</p> */}
+                    <a href="tel:+94778587770" className="text-white font-medium hover:transition-colors">
+                      (+94) 77 8587 770
+                    </a>
                   </div>
                 </div>
 
@@ -90,7 +119,13 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Email</p>
-                    <p className="text-white font-medium">sanjanaumayangi02@gmail.com</p>
+                    {/* <p className="text-white font-medium">sanjanaumayangi02@gmail.com</p> */}
+                    <a
+                      href="mailto:sanjanaumayangi02@gmail.com"
+                      className="text-white font-medium hover:transition-colors"
+                    >
+                      sanjanaumayangi02@gmail.com
+                    </a>
                   </div>
                 </div>
 

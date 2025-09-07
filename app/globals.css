@@ -364,6 +364,7 @@ html {
   animation: curve-flow 8s ease-in-out infinite;
 }
 
+
 /* Enhanced animations with more dramatic effects */
 @keyframes gradient {
   0%,
